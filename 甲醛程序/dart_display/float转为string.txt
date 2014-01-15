@@ -1,0 +1,49 @@
+//将浮点数转化为字符串（整数部分<1000） 
+static String float2str(float val, byte len) 
+{ 
+String str = ""; 
+char tmp[4]; 
+byte pos = 0; 
+int p1; 
+bool minus=false; 
+
+//取绝对值 
+if (val<0) 
+{ 
+minus=true; 
+len--; 
+val = abs(val); 
+} 
+
+p1=(int)val;	//取整数部分 
+val=val-p1;	//得到小数部分 
+
+itoa(p1,tmp,10);	//整数部分转化为字符串 
+str.concat(tmp); 
+
+//获得小数点位置 
+if (p1 == 0) { 
+pos = 1; 
+} 
+else { 
+for (pos=0;pos<len && p1>0;pos++) 
+p1=p1/10; 
+} 
+
+//小数点 
+if (pos<len && val>0){ 
+pos++; 
+str.concat('.'); 
+} 
+
+//小数部分加入字符串 
+for (;pos<len&& val>0;pos++) 
+{ 
+str.concat((char)('0'+ (byte)(val*10))); 
+val= val * 10 - ((byte)(val*10)); 
+} 
+
+if (minus) str = "-" + str; 
+return str; 
+
+} 
